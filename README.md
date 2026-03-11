@@ -7,8 +7,8 @@
 | Service | URL |
 |---------|-----|
 | Frontend | `http://localhost:80` |
-| Backend API | `http://localhost:5000` |
-| Swagger Docs | `http://localhost:5000/api-docs` |
+| Backend API | `http://localhost:5001` |
+| Swagger Docs | `http://localhost:5001/api-docs` |
 
 ---
 
@@ -26,8 +26,8 @@ cp backend/.env.example backend/.env
 docker compose up --build
 
 # Frontend: http://localhost:80
-# Backend:  http://localhost:5000
-# Swagger:  http://localhost:5000/api-docs
+# Backend:  http://localhost:5001
+# Swagger:  http://localhost:5001/api-docs
 ```
 
 ### Local Development (without Docker)
@@ -37,12 +37,12 @@ docker compose up --build
 cd backend
 npm install
 cp .env.example .env  # fill in keys
-npm run dev           # runs on :5000
+npm run dev           # runs on :5001
 
 # Frontend (new terminal)
 cd frontend
 npm install
-cp .env.example .env  # set VITE_API_URL=http://localhost:5000
+cp .env.example .env  # set VITE_API_URL=http://localhost:5001
 npm run dev           # runs on :5173
 ```
 
@@ -99,14 +99,14 @@ npm run dev           # runs on :5173
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `PORT` | Backend port | `5000` |
+| `PORT` | Backend port | `5001` |
 | `GEMINI_API_KEY` | Google AI Studio key | `AIza...` |
 | `EMAIL_HOST` | SMTP host | `smtp.gmail.com` |
 | `EMAIL_PORT` | SMTP port | `587` |
 | `EMAIL_USER` | Gmail address | `you@gmail.com` |
 | `EMAIL_PASS` | Gmail App Password | `xxxx xxxx xxxx xxxx` |
 | `FRONTEND_URL` | CORS whitelist | `http://localhost:5173` |
-| `VITE_API_URL` | Frontend API base URL | `http://localhost:5000` |
+| `VITE_API_URL` | Frontend API base URL | `http://localhost:5001` |
 
 > **Gmail Setup**: Enable 2FA → Google Account → Security → App Passwords → Generate 16-char password
 

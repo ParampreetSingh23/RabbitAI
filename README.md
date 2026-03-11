@@ -25,7 +25,7 @@ docker compose up --build
 
 # Frontend: http://localhost:80
 # Backend:  http://localhost:5001
-# Swagger:  http://localhost:5001/api-docs
+
 ```
 
 ### Local Development (without Docker)

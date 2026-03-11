@@ -17,7 +17,7 @@ app.use(helmet());
 // CORS — whitelist frontend URL
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:5173',
-  'http://localhost:80',
+  'http://localhost:80','http://13.202.112.186/',
   'http://localhost',
 ];
 app.use(

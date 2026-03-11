@@ -1,5 +1,5 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-
+require('dotenv').config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 /**
@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  * @returns {Promise<string>}
  */
 const generateSummary = async (rows) => {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
   const dataString = JSON.stringify(rows, null, 2);
 

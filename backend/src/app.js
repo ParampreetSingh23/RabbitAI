@@ -19,6 +19,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:5173',
   'http://localhost:80',
   'http://localhost',
+  'http://localhost:5174',
+  'http://localhost:5175',
 ];
 app.use(
   cors({

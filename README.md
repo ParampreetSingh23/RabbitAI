@@ -1,7 +1,5 @@
 # 🚀 Sales Insight Automator — Engineer's Log
 
-> **RabbitAI Command Center** · NASA Mission Control meets Black Hole Research Station  
-> AI-powered sales data analysis with sci-fi command center UI
 
 ## 🌐 Live URLs (Placeholders)
 | Service | URL |

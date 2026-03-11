@@ -73,7 +73,7 @@ npm run dev           # runs on :5173
                              │ POST /api/upload
                              │ multipart/form-data
                 ┌────────────▼───────────────┐
-                │     nginx:alpine           │
+                │     nginx: alpine           │
                 │  (static SPA + proxy)      │
                 └────────────┬───────────────┘
                              │

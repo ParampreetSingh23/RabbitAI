@@ -23,7 +23,13 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin) || /^http:\/\/localhost(:\d+)?$/.test(origin)) {
+      // Allow localhost, any IP address (like EC2), and the frontend URL
+      if (
+        !origin || 
+        allowedOrigins.includes(origin) || 
+        /^http:\/\/localhost(:\d+)?$/.test(origin) ||
+        /^http:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(origin)
+      ) {
         callback(null, true);
       } else {
         callback(new Error(`CORS policy: origin ${origin} not allowed`));

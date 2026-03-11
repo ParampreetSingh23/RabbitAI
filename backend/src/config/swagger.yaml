@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: Sales Insight Automator API
+  description: |
+    Upload CSV or XLSX sales data files to receive an AI-generated executive summary
+    delivered via email. Powered by Google Gemini 1.5 Flash.
+  version: 1.0.0
+  contact:
+    name: RabbitAI
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+  - url: https://your-production-domain.com
+    description: Production server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Server is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/upload:
+    post:
+      summary: Upload sales data file
+      operationId: uploadSalesData
+      description: |
+        Upload a CSV or XLSX sales data file along with a recipient email address.
+        The server will parse the file, generate an AI-powered executive summary
+        using Gemini 1.5 Flash, and email the summary to the provided address.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - email
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Sales data file (CSV or XLSX, max 5MB)
+                email:
+                  type: string
+                  format: email
+                  description: Recipient email address for the summary
+            encoding:
+              file:
+                contentType: text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      responses:
+        '200':
+          description: Analysis complete, summary emailed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadSuccessResponse'
+              example:
+                message: Analysis complete. Summary sent to your email.
+                summary: |
+                  **Revenue Overview:** Total revenue for Q4 reached $4.2M, representing
+                  a 18% year-over-year growth driven primarily by the APAC region...
+
+                  **Regional Performance:** The North American region led with $1.8M in
+                  revenue, followed closely by APAC at $1.4M...
+
+                  **Product Category Analysis:** Electronics emerged as the top-performing
+                  category accounting for 42% of total sales...
+
+                  **Strategic Recommendation:** To sustain growth momentum, we recommend
+                  increasing inventory allocation to Electronics in APAC markets...
+        '400':
+          description: Bad request — missing file, email, or invalid file type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingEmail:
+                  summary: Missing email
+                  value:
+                    error: Email is required.
+                noFile:
+                  summary: No file uploaded
+                  value:
+                    error: No file provided.
+                invalidType:
+                  summary: Invalid file type
+                  value:
+                    error: Invalid file type. Only CSV and XLSX files are accepted.
+        '422':
+          description: File contains no data rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Uploaded file contains no data rows.
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Too many requests from this IP. Please wait 15 minutes and try again.
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Internal Server Error
+
+components:
+  schemas:
+    UploadSuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable success message
+          example: Analysis complete. Summary sent to your email.
+        summary:
+          type: string
+          description: AI-generated executive summary (4 paragraphs)
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
